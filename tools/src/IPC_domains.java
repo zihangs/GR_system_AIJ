@@ -43,6 +43,9 @@ public class IPC_domains {
 				File models = new File(target_folder);
 				File[] model_list = models.listFiles();
 				
+				
+				
+				// this blocks of code must be moved !!!!!!!!!!!!!!!!
 				// count number of models
 				int model_count = 0;
 					if (model_list != null) {
