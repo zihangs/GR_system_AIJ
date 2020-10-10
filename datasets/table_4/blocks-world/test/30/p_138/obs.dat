@@ -1,0 +1,6 @@
+(UNSTACK R A)
+(STACK H E)
+(UNSTACK T W)
+(PUT-DOWN M)
+(STACK O T)
+;cost

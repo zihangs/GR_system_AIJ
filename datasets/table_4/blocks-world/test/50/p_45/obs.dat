@@ -1,0 +1,5 @@
+(STACK D O)
+(STACK A W)
+(PUT-DOWN R)
+(STACK P A)
+;cost

@@ -1,0 +1,6 @@
+(STACK T M)
+(PUT-DOWN R)
+(PICK-UP A)
+(STACK H A)
+(STACK T H)
+;cost

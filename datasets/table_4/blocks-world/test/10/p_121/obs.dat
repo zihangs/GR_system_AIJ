@@ -1,0 +1,3 @@
+(PUT-DOWN A)
+(STACK R A)
+;cost

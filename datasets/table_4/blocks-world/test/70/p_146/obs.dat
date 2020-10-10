@@ -1,0 +1,7 @@
+(UNSTACK R A)
+(STACK R E)
+(UNSTACK M O)
+(PICK-UP O)
+(STACK O R)
+(UNSTACK T W)
+;cost

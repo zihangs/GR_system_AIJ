@@ -1,0 +1,4 @@
+(PUT-DOWN R)
+(STACK P E)
+(PICK-UP R)
+;cost

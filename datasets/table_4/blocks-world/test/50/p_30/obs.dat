@@ -1,0 +1,6 @@
+(UNSTACK D A)
+(STACK D W)
+(UNSTACK A C)
+(STACK E A)
+(PICK-UP R)
+;cost

@@ -1,0 +1,4 @@
+(UNSTACK R P)
+(PICK-UP W)
+(STACK O W)
+;cost

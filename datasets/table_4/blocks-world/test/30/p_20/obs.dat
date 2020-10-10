@@ -1,0 +1,4 @@
+(STACK P E)
+(UNSTACK D A)
+(STACK D O)
+;cost

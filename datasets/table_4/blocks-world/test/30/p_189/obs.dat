@@ -1,0 +1,6 @@
+(UNSTACK T W)
+(PICK-UP W)
+(UNSTACK M O)
+(PUT-DOWN M)
+(STACK T O)
+;cost

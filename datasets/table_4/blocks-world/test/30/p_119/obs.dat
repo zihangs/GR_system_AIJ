@@ -1,0 +1,4 @@
+(UNSTACK S A)
+(UNSTACK A H)
+(PUT-DOWN A)
+;cost

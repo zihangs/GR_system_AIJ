@@ -1,0 +1,4 @@
+(STACK U R)
+(PICK-UP C)
+(STACK C U)
+;cost
