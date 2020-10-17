@@ -1,5 +1,0 @@
-(UNSTACK M O)
-(STACK M H)
-(UNSTACK T W)
-(PICK-UP T)
-;cost

@@ -1,4 +1,0 @@
-(UNSTACK M O)
-(STACK M H)
-(PUT-DOWN T)
-(PICK-UP O)

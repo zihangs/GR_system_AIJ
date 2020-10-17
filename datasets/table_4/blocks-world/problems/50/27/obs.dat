@@ -1,5 +1,0 @@
-(PUT-DOWN R)
-(PICK-UP E)
-(STACK E R)
-(PICK-UP W)
-(STACK P O)

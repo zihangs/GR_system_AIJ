@@ -1,4 +1,0 @@
-(PUT-DOWN R)
-(UNSTACK D A)
-(PUT-DOWN D)
-(STACK A R)

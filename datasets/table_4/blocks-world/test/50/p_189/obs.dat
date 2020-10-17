@@ -1,8 +1,0 @@
-(PICK-UP E)
-(STACK T A)
-(STACK W E)
-(PUT-DOWN M)
-(PICK-UP O)
-(UNSTACK T A)
-(STACK T O)
-;cost

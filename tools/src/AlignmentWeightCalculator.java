@@ -26,6 +26,9 @@ public class AlignmentWeightCalculator{
 		for(int i=0; i< alignment.size(); i++)
 		{
 			
+			//System.out.println(alignment.get(i).getMoL());
+			//System.out.println(alignment.get(i).getMoM());
+			
 			if(!alignment.get(i).getMoL().equals("SKIP_STEP"))
 			{
 				count_i++;  // this is increasing cost (consider the discount factor)

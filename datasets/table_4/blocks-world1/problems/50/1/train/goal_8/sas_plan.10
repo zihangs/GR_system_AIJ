@@ -1,7 +1,0 @@
-(pick-up u)
-(stack u t)
-(pick-up r)
-(stack r u)
-(pick-up k)
-(stack k s)
-; cost = 6 (unit cost)

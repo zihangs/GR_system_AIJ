@@ -32,9 +32,9 @@ T extends ITransition, M extends IMarking<F,N,P,T>> {
 	public ArrayList<String> output_strings;
 	
 	// parameters for alignment weights (default values)
-	public int phi = 50;
-	public double lambda = 1.1;
-	public double delta = 1.0;
+	public int phi;
+	public double lambda;
+	public double delta;
 	
 	// setters for parameters
 	public void set_phi(int phi) {
@@ -111,10 +111,6 @@ T extends ITransition, M extends IMarking<F,N,P,T>> {
 	
 	
 	
-	
-	
-	
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public int cost(PQLTrace trace, int model, int steps) throws ClassNotFoundException, SQLException {
 		
@@ -147,12 +143,6 @@ T extends ITransition, M extends IMarking<F,N,P,T>> {
 		}
 		return costs;
 	}
-	
-
-	
-	
-	
-		
 	
 	
 	// Boltzmann distribution with parameter BETA
@@ -193,17 +183,7 @@ T extends ITransition, M extends IMarking<F,N,P,T>> {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	// return the best matched model
+	// return the best matched model(s)
 	public ArrayList<Integer> best_match(ArrayList<Double> probs){
 		double best_prob = probs.get(0);
 		ArrayList<Integer> results = new ArrayList<Integer>();

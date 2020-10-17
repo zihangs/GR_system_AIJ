@@ -1,4 +1,0 @@
-(STACK S T)
-(UNSTACK A H)
-(PUT-DOWN A)
-(STACK S H)

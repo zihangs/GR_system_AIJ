@@ -1,10 +1,5 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
-
-import org.jbpt.petri.*;
-import org.jbpt.petri.io.PNMLSerializer;
 
 public class Sequence {
 	
@@ -14,13 +9,6 @@ public class Sequence {
 	public Sequence(ArrayList<String> seq, int model) {
 		this.model = model;
 		this.sequence = seq;
-	}
-	
-	private int selectModel() {
-		Random rand = new Random();
-		// if select pnml file from a folder known the number of pnml files
-		int modelIndex = rand.nextInt(6) + 1;
-		return modelIndex;
 	}
 	
 	// steps by steps matched queries

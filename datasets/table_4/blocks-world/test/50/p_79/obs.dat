@@ -1,5 +1,0 @@
-(PUT-DOWN S)
-(UNSTACK A H)
-(PICK-UP S)
-(STACK S T)
-;cost

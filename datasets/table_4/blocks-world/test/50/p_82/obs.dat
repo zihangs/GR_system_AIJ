@@ -1,6 +1,0 @@
-(PUT-DOWN A)
-(PICK-UP U)
-(STACK U S)
-(PICK-UP R)
-(STACK R U)
-;cost

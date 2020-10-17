@@ -1,5 +1,0 @@
-(PICK-UP P)
-(STACK P E)
-(PICK-UP O)
-(UNSTACK D A)
-;cost
