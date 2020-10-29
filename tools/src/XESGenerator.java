@@ -105,7 +105,6 @@ public class XESGenerator {
 	    	}
 		}
 		
-		System.out.println(sequence);
 		Sequence result = new Sequence(sequence, model);
 		return result;
 	}
@@ -138,7 +137,6 @@ public class XESGenerator {
 	    	}
 		}
 		
-		System.out.println(sequence);
 		// to goal E (number 4) overload method
 		Sequence result = new Sequence(sequence, 4);
 		return result;
@@ -174,7 +172,6 @@ public class XESGenerator {
 	    	}
 		}
 		
-		System.out.println(sequence);
 		Sequence result = new Sequence(sequence, model);
 		return result;
 	}

@@ -16,11 +16,11 @@ public class IPC_domains {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
 		
 		// configurable parameters
-		String input_dataset = "../gene_plans/";  // may include many domains
-		String domain = "blocks-world1";
+		String input_dataset = "../gene_data/";  // may include many domains
+		String domain = "blocks-world";
 		
 		int phi = 50;
-		double lambda = 1.1;
+		double lambda = 1.5;
 		double delta = 1.0;
 		
 		// =========================================================== //
@@ -88,10 +88,11 @@ public class IPC_domains {
 					output_results = output_results + r + "/";
 				}
 				
-				System.out.println("Step " + (step) + ": " + costs);
-				System.out.println(probabilities);
-				System.out.println(results);
-				System.out.println("Step " + (step) + ": " + s.sequence);
+				System.out.println("Costs: " + costs);
+				System.out.println("Probabilities: " + probabilities);
+				System.out.println("Results " + results);
+				System.out.println("Real goal: " + s.model);
+				System.out.println("Steps " + (step) + ": " + s.sequence);
 				
 				// csvWriter.append("Percent,Real_Goal,Time,Cost,Prob,Results\n");
 				csvWriter.append(percent + "," + s.model + "," + time + "," + output_cost + "," + output_prob + "," + output_results + "\n");
