@@ -16,12 +16,17 @@ public class IPC_domains {
 	public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
 		
 		// configurable parameters
-		String input_dataset = "../gene_data/";  // may include many domains
-		String domain = "blocks-world";
+		//String input_dataset = "../gene_data/";
+		//String domain = "blocks-world";
+		//int phi = 50;
+		//double lambda = 1.5;
+		//double delta = 1.0;
 		
-		int phi = 50;
-		double lambda = 1.5;
-		double delta = 1.0;
+		String input_dataset = args[0];
+		String domain = args[1];
+		int phi = Integer.parseInt(args[2]);
+		double lambda = Double.parseDouble(args[3]);
+		double delta = Double.parseDouble(args[4]);
 		
 		// =========================================================== //
 		String output_path = "../outputs/";
