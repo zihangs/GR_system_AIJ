@@ -42,22 +42,21 @@ public class IPC_domains {
 		
 		alignmentTool alignmentTool = null;
 		for (int percent : percent_list) {
-			// find each problem set
-			File[] problem_list = getProblems(input_dataset + "problems/" + Integer.toString(percent));
 			
-			for (File a_problem : problem_list) {
-				// skip the hidden files (.DS_store)
-				if (a_problem.isHidden()) {
-					continue;
-				}
+			// find each problem set
+			int len = getProblemsNum(input_dataset + "problems/" + Integer.toString(percent));
+			
+			for (int i = 0; i < len; i++) {
+				String model_lib = input_dataset + "problems/" + Integer.toString(percent) +"/"+ Integer.toString(i) + "/train/";
 
-				String model_lib = a_problem + "/train/";
-				String problem_id = a_problem.getName();
+
+				String problem_id = Integer.toString(i);
 				
 				// count number of models
-				int model_count = modelCounter(model_lib);
+				int model_count = modelCounter(model_lib);			
 				if (model_count > 0) {
 					// index all models once
+					
 					alignmentTool = new alignmentTool(model_count, model_lib);
 					// set parameters
 					alignmentTool.set_phi(phi);
@@ -107,11 +106,19 @@ public class IPC_domains {
 		csvWriter.close();
 	}
 	
-	public static File[] getProblems(String dir_name) {
+	public static int getProblemsNum(String dir_name) {
 		File dir = new File(dir_name);
 		File[] problem_list = dir.listFiles();
-		Arrays.sort(problem_list);
-		return problem_list;
+		int count = 0;
+		for (File p : problem_list) {
+			// skip the hidden files (.DS_store)
+			if (p.isHidden()) {
+				count += 0;
+			} else {
+				count += 1;
+			}
+		}
+		return count;
 	}
 	
 	
@@ -130,12 +137,14 @@ public class IPC_domains {
 	
 	// count the number of Petri Nets (models) in the given directory
 	public static int modelCounter(String dir) {
+		
 		File models = new File(dir);
 		File[] model_list = models.listFiles();
 		int model_count = 0;
 		if (model_list != null) {
 			for (File model : model_list) {
 				if (model.isFile() && model.getName().endsWith(".pnml")) {
+					
 					model_count++;
 				}
 			}

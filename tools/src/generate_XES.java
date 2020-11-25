@@ -10,18 +10,18 @@ public class generate_XES {
 	ClassNotFoundException, SQLException, JSONException{
 		
 		File dir = new File(args[0]);
-		File listDir[] = dir.listFiles();
-		
-		// folder for output and store the XES event logs
-		File new_folder = new File(args[0]);
-		new_folder.mkdir();
 		
 		XESGenerator xes_generator = new XESGenerator();
-		for (int i = 0; i < listDir.length; i++) {
-		    if (listDir[i].isDirectory()) {
-		    	xes_generator.generate(listDir[i].toString(), new_folder.toString() + "/created" + i + ".xes");
+		for (File an_item : dir.listFiles()) {
+			
+		    if (an_item.isDirectory()) {
+		    	String input = an_item.getPath();
+		    	String index = an_item.getName().split("_")[1];
+		    	String output = dir.toString() + "/created" + index + ".xes";
 
-		    	System.out.println(listDir[i]);
+		    	xes_generator.generate(input, output);
+
+		    	System.out.println(output);
 		    }
 		}
 		System.out.println("successfully done");

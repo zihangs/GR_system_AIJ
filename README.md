@@ -36,3 +36,9 @@ This is the advantage of other approach (will update later).
 
 The outputs will be a csv file stored in `outputs/`, all the outputs contains the predicted goals for each problems. And the CSV file will be used for calculating statistical results (precision, recall, accuracy etc). Please see the statistical calculation part for more details.
 
+
+
+Docker:
+
+need to download the jdk and then `docker build`
+
