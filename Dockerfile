@@ -2,11 +2,12 @@ FROM ubuntu:20.04
 
 RUN apt update -y && apt upgrade -y
 RUN mkdir -p /var/cache/oracle-jdk11-installer-local/
-COPY ./jdk-11.0.9_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
+
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:linuxuprising/java
 RUN apt-get update
 
+#COPY ./jdk-11.0.9_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
 #RUN apt install -y oracle-java11-installer-local
 
 RUN apt-get install -y python3.8
