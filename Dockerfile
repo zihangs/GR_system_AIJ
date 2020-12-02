@@ -7,7 +7,7 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:linuxuprising/java
 RUN apt-get update
 
-#COPY ./jdk-11.0.9_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
+COPY ./jdk-11.0.9_linux-x64_bin.tar.gz /var/cache/oracle-jdk11-installer-local/
 #RUN apt install -y oracle-java11-installer-local
 
 RUN apt-get install -y python3.8
@@ -22,5 +22,5 @@ RUN pip3 install seaborn
 RUN pip3 install ipyparallel
 RUN pip3 install platypus-opt
 
-CMD ["jupyter", "notebook", "--port=9999", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+# CMD ["jupyter", "notebook", "--port=9999", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
 

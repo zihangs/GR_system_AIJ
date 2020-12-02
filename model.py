@@ -41,12 +41,6 @@ def func_accuracy(total, stringList, answer):
 def calculate_statistics(rows):
     length = rows.shape[0]
 
-    if length == 0:
-
-        print("lalalalalalalal...................")
-
-        exit(0)
-    
     precision = 0
     recall = 0
     accuracy = 0
@@ -76,7 +70,7 @@ def calculate_statistics(rows):
 def gr_system(phi, lamb, delta, domain):
     # run GR with phi lamb delta
     os.chdir("./tools/")
-    os.system("java -jar gr_ipc.jar ../gene_data/ %s %s %s %s" %(domain, str(phi), str(lamb), str(delta)))
+    os.system("java -jar gr_ipc.jar ../gene_data/ %s %s %s %s > /dev/null" %(domain, str(phi), str(lamb), str(delta)))
     os.chdir("../")
     # calculate p r a
     
