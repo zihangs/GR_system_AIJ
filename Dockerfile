@@ -21,6 +21,7 @@ RUN pip3 install scipy
 RUN pip3 install seaborn
 RUN pip3 install ipyparallel
 RUN pip3 install platypus-opt
+RUN pip3 install SALib
 
 # CMD ["jupyter", "notebook", "--port=9999", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
 
