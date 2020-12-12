@@ -204,4 +204,27 @@ T extends ITransition, M extends IMarking<F,N,P,T>> {
 		}
 		return results;
 	}
+	
+	
+	// return the best matched model(s): with fraction threshold
+	public ArrayList<Integer> best_match_fraction(ArrayList<Double> probs, double threshold){
+		// find the largest prob
+		double best_prob = probs.get(0);
+		for (int model = 1; model < num_of_goals; model++) {
+			double tmp_prob = probs.get(model);
+			if (tmp_prob > best_prob) {
+				best_prob = tmp_prob;
+			}
+		}
+		
+		// fraction threshold filter
+		ArrayList<Integer> results = new ArrayList<Integer>();
+		for (int model = 0; model < num_of_goals; model++) {
+			double tmp_prob = probs.get(model);
+			if (tmp_prob/best_prob >= threshold) {
+				results.add(model);
+			}
+		}
+		return results;
+	}
 }

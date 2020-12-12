@@ -21,12 +21,14 @@ public class IPC_domains {
 		//int phi = 50;
 		//double lambda = 1.5;
 		//double delta = 1.0;
+		//double threshold = 0.8
 		
 		String input_dataset = args[0];
 		String domain = args[1];
 		int phi = Integer.parseInt(args[2]);
 		double lambda = Double.parseDouble(args[3]);
 		double delta = Double.parseDouble(args[4]);
+		double threshold = Double.parseDouble(args[5]);
 		
 		// =========================================================== //
 		String output_path = "../outputs/";
@@ -73,7 +75,8 @@ public class IPC_domains {
 				long begin = System.nanoTime();
 				ArrayList<Integer> costs = alignmentTool.allCosts(s, step);
 				ArrayList<Double> probabilities = alignmentTool.probabilities(costs);
-				ArrayList<Integer> results = alignmentTool.best_match(probabilities);
+				// ArrayList<Integer> results = alignmentTool.best_match(probabilities);
+				ArrayList<Integer> results = alignmentTool.best_match_fraction(probabilities, threshold);
 				long end = System.nanoTime();
 				long time = end - begin;
 			
