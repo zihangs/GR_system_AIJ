@@ -67,10 +67,10 @@ def calculate_statistics(rows):
     
     return precision, recall, accuracy
 
-def gr_system(phi, lamb, delta, domain):
+def gr_system(phi, lamb, delta, threshold, domain):
     # run GR with phi lamb delta
     os.chdir("./tools/")
-    os.system("java -jar gr_ipc.jar ../gene_data/ %s %s %s %s > /dev/null" %(domain, str(phi), str(lamb), str(delta)))
+    os.system("java -jar gr_ipc.jar ../gene_data/ %s %s %s %s %s > /dev/null" %(domain, str(phi), str(lamb), str(delta), str(threshold)))
     os.chdir("../")
     # calculate p r a
     
