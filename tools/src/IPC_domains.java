@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class IPC_domains {
 	public static XESGenerator xes_generator = new XESGenerator();
@@ -46,9 +47,9 @@ public class IPC_domains {
 		for (int percent : percent_list) {
 			
 			// find each problem set
-			int len = getProblemsNum(input_dataset + "problems/" + Integer.toString(percent));
+			ArrayList<Integer> prob_numbers = getProblemsNum(input_dataset + "problems/" + Integer.toString(percent));
 			
-			for (int i = 0; i < len; i++) {
+			for (int i : prob_numbers) {
 				String model_lib = input_dataset + "problems/" + Integer.toString(percent) +"/"+ Integer.toString(i) + "/train/";
 
 
@@ -109,19 +110,20 @@ public class IPC_domains {
 		csvWriter.close();
 	}
 	
-	public static int getProblemsNum(String dir_name) {
+	public static ArrayList<Integer> getProblemsNum(String dir_name) {
 		File dir = new File(dir_name);
 		File[] problem_list = dir.listFiles();
-		int count = 0;
+		
+		ArrayList<Integer> numbers = new ArrayList<Integer>();
 		for (File p : problem_list) {
 			// skip the hidden files (.DS_store)
-			if (p.isHidden()) {
-				count += 0;
-			} else {
-				count += 1;
+			if (!p.isHidden()) {
+				String[] l = p.toString().split("/");
+				numbers.add(Integer.parseInt(l[l.length-1]));
 			}
 		}
-		return count;
+		Collections.sort(numbers);
+		return numbers;
 	}
 	
 	
@@ -130,7 +132,6 @@ public class IPC_domains {
 		String test_dir = folder_name + "/test/" + Integer.toString(percent) + "/" + problem_id + "/";
 		BufferedReader br = new BufferedReader(new FileReader(test_dir + "goal.txt"));
 		String goal = br.readLine().toString();
-		
 		Sequence s = xes_generator.pick_sequence_lower_case(test_dir, Integer.parseInt(goal), 1);  // only have one trace which is 0
 		br.close();
 		return s;
@@ -147,7 +148,6 @@ public class IPC_domains {
 		if (model_list != null) {
 			for (File model : model_list) {
 				if (model.isFile() && model.getName().endsWith(".pnml")) {
-					
 					model_count++;
 				}
 			}

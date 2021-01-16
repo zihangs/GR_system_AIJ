@@ -15,15 +15,24 @@ public class PM_Simulation {
 		String domain = args[0];
 		int goals = Integer.parseInt(args[1]);
 		String outputFile = "../outputs/" + domain + ".csv";
-		String model_dir = "../datasets/table_1/" + domain + "/";
-		String model_format = "TSML"; // or "XES"
+		String model_dir = "../table_1/" + domain + "/";
+		
+		int phi = Integer.parseInt(args[2]);
+		double lambda = Double.parseDouble(args[3]);
+		double delta = Double.parseDouble(args[4]);
+		
+		double threshold = Double.parseDouble(args[5]);
 		
 		// file start writing:
 		FileWriter csvWriter = new FileWriter(outputFile);
 		csvWriter.append("Model,Step,Time,Cost,Prob,Results\n");
 		
 		// index the models
-		alignmentTool alignmentTool = new alignmentTool(goals, model_dir, model_format);
+		alignmentTool alignmentTool = new alignmentTool(goals, model_dir);
+		// set parameters
+		alignmentTool.set_phi(phi);
+		alignmentTool.set_lambda(lambda);
+		alignmentTool.set_delta(delta);
 		
 		int count = 0;
 		for (int j = 0; j < goals; j++) {
@@ -44,15 +53,15 @@ public class PM_Simulation {
 					List<Integer> tmp_index = shuffle_index.subList(0, step);
 					java.util.Collections.sort(tmp_index);
 					
-					Sequence tmp_s = ramdom_sample (s, tmp_index);
+					Sequence tmp_s = ramdom_sample(s, tmp_index);
 					
 					long begin = System.nanoTime();
 					ArrayList<Integer> costs = null;
 					ArrayList<Double> probabilities = null;
-					costs = alignmentTool.allCosts(tmp_s, step, "MoL", "IncreasingCost");
+					costs = alignmentTool.allCosts(tmp_s, step);
 					probabilities = alignmentTool.probabilities(costs);
 					
-					ArrayList<Integer> results = alignmentTool.best_match(probabilities);
+					ArrayList<Integer> results = alignmentTool.best_match_fraction(probabilities, threshold);
 					long end = System.nanoTime();
 					long time = end - begin;
 					
