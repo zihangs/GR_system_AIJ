@@ -110,52 +110,16 @@ public class XESGenerator {
 	}
 	
 	
-	public Sequence pick_sequence(String directory, int plan_num) throws IOException {
+	
+	
+	public Sequence pick_sequence_lower_case(String directory, int model, String seq_file_name) throws IOException {
 		File folder = new File(directory);
 		File[] listOfFiles = folder.listFiles();
-        
-        // model index starting from 1
-        int count = 0;
         
         ArrayList<String> sequence = new ArrayList<String>();
 		
 		for (File file : listOfFiles) {
-	    	if (count == plan_num) {
-	    		BufferedReader br = new BufferedReader(new FileReader(file));
-	    		String st;
-	    		while ((st = br.readLine()) != null && st.length() > 0) {
-		        	char firstChar = st.charAt(0);
-		        	if (firstChar != ';') {
-		        		sequence.add(st);
-		        	}
-		        }
-	    		br.close();
-	    		break;
-	    		
-	    	} else {
-	    		count++;
-	    	}
-		}
-		
-		// to goal E (number 4) overload method
-		Sequence result = new Sequence(sequence, 4);
-		return result;
-	}
-	
-	
-	
-	
-	public Sequence pick_sequence_lower_case(String directory, int model, int plan_num) throws IOException {
-		File folder = new File(directory);
-		File[] listOfFiles = folder.listFiles();
-        
-        // model index starting from 0
-        int count = 0;
-        
-        ArrayList<String> sequence = new ArrayList<String>();
-		
-		for (File file : listOfFiles) {
-	    	if (count == plan_num) {
+	    	if (file.getName().equals(seq_file_name)) {
 	    		BufferedReader br = new BufferedReader(new FileReader(file));
 	    		String st;
 	    		while ((st = br.readLine()) != null) {
@@ -166,9 +130,6 @@ public class XESGenerator {
 		        }
 	    		br.close();
 	    		break;
-	    		
-	    	} else {
-	    		count++;
 	    	}
 		}
 		

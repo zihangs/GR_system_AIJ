@@ -132,7 +132,7 @@ public class IPC_domains {
 		String test_dir = folder_name + "/test/" + Integer.toString(percent) + "/" + problem_id + "/";
 		BufferedReader br = new BufferedReader(new FileReader(test_dir + "goal.txt"));
 		String goal = br.readLine().toString();
-		Sequence s = xes_generator.pick_sequence_lower_case(test_dir, Integer.parseInt(goal), 1);  // only have one trace which is 0
+		Sequence s = xes_generator.pick_sequence_lower_case(test_dir, Integer.parseInt(goal), "obs.dat");
 		br.close();
 		return s;
 	}
@@ -147,7 +147,7 @@ public class IPC_domains {
 		int model_count = 0;
 		if (model_list != null) {
 			for (File model : model_list) {
-				if (model.isFile() && model.getName().endsWith(".pnml")) {
+				if (model.isFile() && !model.isHidden() && model.getName().endsWith(".pnml")) {
 					model_count++;
 				}
 			}
