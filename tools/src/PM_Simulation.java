@@ -12,10 +12,15 @@ public class PM_Simulation {
 		// TODO Auto-generated method stub
 		XESGenerator xes_generator = new XESGenerator();
 		
-		String domain = args[0];
-		int goals = Integer.parseInt(args[1]);
+		
+		// sepsis_1 50 1.0 1.0 1.0 (input)
+		String data_dir = args[0];
+		String domain = args[1];
+		
 		String outputFile = "../outputs/" + domain + ".csv";
-		String model_dir = "../table_1/" + domain + "/";
+
+		String model_dir = data_dir + domain + "/";
+		int goals = modelCounter(model_dir);
 		
 		int phi = Integer.parseInt(args[2]);
 		double lambda = Double.parseDouble(args[3]);
@@ -25,7 +30,7 @@ public class PM_Simulation {
 		
 		// file start writing:
 		FileWriter csvWriter = new FileWriter(outputFile);
-		csvWriter.append("Model,Step,Time,Cost,Prob,Results\n");
+		csvWriter.append("Model,Step,Obs,Time,Cost,Prob,Results\n");
 		
 		// index the models
 		alignmentTool alignmentTool = new alignmentTool(goals, model_dir);
@@ -49,9 +54,14 @@ public class PM_Simulation {
 				ArrayList<Integer> step_list = percentList(steps);
 				
 				
+				int j_obs = 0;
+				int[] obs = {10, 30, 50, 70, 100};
+				
 				for (int step : step_list) {
 					List<Integer> tmp_index = shuffle_index.subList(0, step);
 					java.util.Collections.sort(tmp_index);
+					
+					System.out.println(tmp_index);
 					
 					Sequence tmp_s = ramdom_sample(s, tmp_index);
 					
@@ -86,8 +96,10 @@ public class PM_Simulation {
 					System.out.println(results);
 					System.out.println("Step " + (step) + ": " + tmp_s.sequence);
 					// if adding the sequence step by step: s.sequence.subList(0, step+1)
-					csvWriter.append(s.model + "," + step + "," + time + "," + output_cost + "," + output_prob + "," + output_results + "\n");
+					csvWriter.append(s.model + "," + step + "," + obs[j_obs] + "," + time + "," + output_cost + "," + output_prob + "," + output_results + "\n");
 					csvWriter.flush();
+					
+					j_obs ++;
 				}
 			}
 		}
@@ -121,6 +133,21 @@ public class PM_Simulation {
 		lst.add((int) (total_steps*0.7 + 1));
 		lst.add(total_steps);
 		return lst;
+	}
+	
+	public static int modelCounter(String dir) {
+		
+		File models = new File(dir);
+		File[] model_list = models.listFiles();
+		int model_count = 0;
+		if (model_list != null) {
+			for (File model : model_list) {
+				if (model.isDirectory()) {
+					model_count++;
+				}
+			}
+		}
+		return model_count;
 	}
 
 }
