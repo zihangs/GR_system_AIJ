@@ -30,7 +30,7 @@ public class PM_Simulation {
 		
 		// file start writing:
 		FileWriter csvWriter = new FileWriter(outputFile);
-		csvWriter.append("Model,Step,Obs,Time,Cost,Prob,Results\n");
+		csvWriter.append("Real_Goal,Step,Percent,Time,Cost,Prob,Results\n");
 		
 		// index the models
 		alignmentTool alignmentTool = new alignmentTool(goals, model_dir);
