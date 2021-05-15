@@ -48,6 +48,7 @@ java -jar gr_pm.jar ../real_world_domains/ build_prmt_82 50 1.5 1.0 1.0
 The outputs will be a csv file stored in `outputs/`, all the outputs contains the predicted goals for each problems. And the CSV file will be used for calculating the overall performance.
 
 * **Performance metrics:** The python notebooks `IPC.ipynb` and `PM.ipynb` are used for calculate the average performance over all problems in a domains. The notebooks take CSV file from `outputs/` and can calculate **precision**, **recall**, **accuracy**, and **running time**.
+* **Run with the recommended parameters:** The PRIM algorithm in sensitivity analysis can recommend a set of parameters for good performance. Take the recomeneded parameters and run GR experiment, then calculate the performance.
 
 ### Sensitivity analysis simulation
 
