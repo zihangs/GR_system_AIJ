@@ -3,6 +3,7 @@ import subprocess
 import numpy as np
 import pandas as pd
 
+
 def func_precision(stringList, answer):
     goal_count = 0
     found = 0
@@ -67,10 +68,10 @@ def calculate_statistics(rows):
     
     return precision, recall, accuracy
 
-def gr_system(phi, lamb, delta, threshold, domain):
+def gr_system(jar, data_dir, phi, lamb, delta, threshold, domain):
     # run GR with phi lamb delta
     os.chdir("./tools/")
-    os.system("java -jar gr_ipc.jar ../gene_data/ %s %s %s %s %s > /dev/null" %(domain, str(phi), str(lamb), str(delta), str(threshold)))
+    os.system("java -jar %s ../%s/ %s %s %s %s %s > /dev/null" %(jar, data_dir, domain, str(phi), str(lamb), str(delta), str(threshold)))
     os.chdir("../")
     # calculate p r a
     

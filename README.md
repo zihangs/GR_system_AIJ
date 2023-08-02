@@ -1,106 +1,101 @@
-# Goal Recognition System
+# PM-Based Goal Recognition System
 
-Our goal recognition system (GR system) aims to predict the goal(s) for a given sequence of actions. The GR algorithm we proposed is based on process models which are mined from historical observations (event logs). Therefore, this system need to load a set of existing process models into memory (indexing models) and then provide inferences of goals for a given trace of observations.
+The process mining-based goal recognition system (GR system) aims to predict the goal(s) for a given sequence of actions. This system needs to load a set of process (skill) models into memory (indexing models) and then it can provide inferences of goals for a given trace of observations. The process models are mined from historical observations. The process models and traces of observations are available  [here](https://doi.org/10.26188/21749570) (please download the dataset and extract the included tar files before conducting the following experiments).
 
 ### Experiments for IPC domains
 
-From previous steps, we should obtain the process models for each domain. We need to move the process models into this directory for model indexing. In my case, I generated plans and event logs, then I mined process models and stored all these data in `./gene_data/`. (Link)
-
-Once put the process models in the right place, then you need to find the tool for running IPC experiments. All the compiled jar files are in `tools/`, the `gr_ipc.jar` is the tool for running GR experiments on IPC domains. Notice java 8 or 11 is required.
+The GR problem instances and testing cases for IPC domains are contained in the `synthetic_domains.tar.bz2`. After downloading and extracting the dataset, change the directory to `tools/`, and you will find the compiled jar `gr_ipc.jar`, which is the tool for running GR experiments on IPC domains (java 8 or 11 is required).
 
 There are a few parameters need to be specify:
 
-- Input dataset (`gene_data/`).
+- Root directory of input data (e.g. `synthetic_domains/topk/`).
 - The domain name.
-- Phi: the constance for calculating alignment weight.
-- Lambda: the base of consective mis-aligned exponential factor.
-- Delta: the base of discount factor.
-- Threshold: the acceptance threshold of a candidate goal to the highest possibility goal.
+- Phi: the constance for calculating alignment weight (int).
+- Lambda: the base of consective mis-aligned exponential factor (double).
+- Delta: the base of discount factor (double).
+- Threshold: the acceptance threshold of a candidate goal to the highest possibility goal (double).
 
-Run the following commands for a specific domain with all parameters.
+Run the following commands to test the GR system in a specific IPC domain with default parameters.
 
 ```sh
 # need to change directory to ./tools/
 cd tools/
 
-# java -jar gr_ipc.jar <input_data> <domain> <phi> <lambda> <delta> <threshold>
-java -jar gr_ipc.jar ../gene_data/ blocks-world 50 1.5 1.0 1.0
+# java -jar gr_ipc.jar <input_data_dir> <domain> <phi> <lambda> <delta> <threshold>
+java -jar gr_ipc.jar ../synthetic_domains/topk/ blocks-world 50 1.5 1.0 1.0
 ```
 
-Notice, the purpose for running experiments on IPC domains are for comparing performance with other GR algorithms.
+According to the PRIM algorithm, the optimized parameter ranges can be found in tables 7-8 in the paper (we selected the middle points of the ranges to configure each of the parameters).
 
 ### Experiments for BPIC domains
 
-This GR system run on real-world domains (BPIC datasets) using the same parameters as above. Before running the code, we need to put the real-world domain datasets with the mined Petri-Nets (with `.xes.pnml` extensions) and testing traces into the directory ``./real_world_domains/``. (Link for download)
+The GR problem instances and testing cases for real-world domains (BPIC datasets) are contained in the `business_logs.tar.bz2`. After downloading and extracting the dataset, change the directory to `tools/`, and you will find the compiled jar `gr_pm.jar` to test the GR performance in real-world domains (java 8 or 11 is required). Note that the two compiled jars, `gr_ipc.jar` and `gr_pm.jar`, are slightly different due to differences in their input data structures, but the GR functions are the same.
 
-Run the following commands for a specific domain with all parameters.
+Test the GR system in a specific real-world domain with default parameters.
 
 ```sh
 # need to change directory to ./tools/
 cd tools/
 
-# java -jar gr_pm.jar <input_data> <domain> <phi> <lambda> <delta> <threshold>
-java -jar gr_pm.jar ../real_world_domains/ build_prmt_82 50 1.5 1.0 1.0
+# java -jar gr_pm.jar <input_data_dir> <domain> <phi> <lambda> <delta> <threshold>
+java -jar gr_pm.jar ../business_logs/multiple/ build_prmt_82 50 1.5 1.0 1.0
 ```
 
-### Outputs
+The **outputs** will be a csv file stored in `outputs/`. All the outputs contains the predicted goals (inferences) for each problem instances. The CSV file will be used for calculating the overall performance. Don't delete `outputs/` to avoid small issues, but the generated CSV files in this directory can be removed.
 
-The outputs will be a csv file stored in `outputs/`, all the outputs contains the predicted goals for each problems. And the CSV file will be used for calculating the overall performance.
+* **Performance metrics:** The python notebooks `IPC.ipynb` and `PM.ipynb` are used for calculate the average performance over all problems in a domains. The notebooks take CSV file from `outputs/` and can calculate **precision**, **recall**, **accuracy**, and **execution time**.
+* **Run with the recommended parameters:** The PRIM algorithm mentioned in paper provided a solution for optimizing the parameters.
 
-* **Performance metrics:** The python notebooks `IPC.ipynb` and `PM.ipynb` are used for calculate the average performance over all problems in a domains. The notebooks take CSV file from `outputs/` and can calculate **precision**, **recall**, **accuracy**, and **running time**.
-* **Run with the recommended parameters:** The PRIM algorithm in sensitivity analysis can recommend a set of parameters for good performance. Take the recomeneded parameters and run GR experiment, then calculate the performance.
+### Sensitivity Analysis
 
-### Sensitivity analysis simulation
+We use the [EMA Workbench](https://emaworkbench.readthedocs.io/en/latest/) for Sobol sensitivity analysis and open exploration (PRIM). The required dependencies are included in the `Dockerfile`. To start a container with all the necessary requirements, simply run the Dockerfile. Alternatively, if you prefer, you can install the requirements on your own device.
 
-The sensitivity analysis can test whether the parameters (phi, delta, lambda, threshold) have significant impact on the performance. To analysis the sensitivity of parameters, we need to simulate GR experiments over a large number of iterations. For each iteration, we need to set up different parameters so that we can confirm if the parameters are different, would the performance also be different. Two files `model.py` and `experiment_simulator.py` are used for running the simulation. The simulation results are stored in a `tar.gz` file which includes all the performance statistics and the associtate parameter settings. We can analysis the simulation results in [here](https://github.com/zihangs/GR_model_sensitivity_analysis).
-
-* **Notice:** During the simulation, the `outputs/` directory will  store the intermediate GR results, so need to be careful with the overwrite issues.
-
-Requirements for running the simulation: a few python package need to be installed (see the docker file, `Dockerfile`, if you don't want to simulate in a docker container, you need to install the requirements directly on your machine).
-
-**Docker container:** running in docker container allow us to run multiple simulation in parallel.
-
-We use OpenJDK 11 in the container, the legacy code are using Oracle's JDK 11, both of the version are ok. For the first time, you need to build the docker image (the default docker file is `Dockerfile`).
+Build the docker image, the default docker file is `Dockerfile`.
 
 ```sh
 # docker build -t <image_name>:<version> <the Dockerfile> 
-docker build -t sa:1.0 .
+docker build -t sensitivity_analysis:1.0 .
 ```
 
-Once the docker image is built successfully, we can start a docker container and mount volume, also we need start with internal terminal.
+After building the image, start a container with a mounted volume, and initiate an internal terminal within the container. `/my_path` refers to the absolute path of this local directory.
 
 ```sh
-# docker run -it -v <local_volume>:<docker_volume> <image_name>:<version> /bin/bash
-docker run -it -v /home/ubuntu/data_storage/GR_system_real_m/:/home sa:2.0 /bin/bash
+# docker run -it -v <local_volume>:<docker_volume> <image_name>:<version> <internal_path>
+docker run -it -v /my_path:/mnt sensitivity_analysis:1.0 /bin/bash
+
+# change directory to /mnt within the container
+cd /mnt
 ```
 
-You may need to make a slightly change to match the directories on your machine.
 
 
+Sensitivity analysis aims to verify whether the parameters (phi, delta, lambda, threshold) have significant impact on the performance. The simulator (EMA workbench) conducts GR experiments over numerous iterations, with different parameters configured for each iteration. The sensitivity analysis is then performed on the results of these experiments to illustrate whether varying the parameters affects the system's performance. Two files, `model.py` and `experiment_simulator.py`, are used for running the simulation. The simulation results, comprising various measure metrics and their corresponding parameter values, are stored in a `tar.gz` file. 
 
-### Configure EMA models
+Run the following commands in the running container to simulate 1000 experiments for PRIM and 1050 $\times$ 10 experiments for Sobol sensitivity analysis.
 
-We should configure the EMA model code before running simualtion. The places need to check:
-
-In `model.py`, check the wrapped command code:
-
-```python
-# for ipc: gr_ipc.jar, ../gene_data/
-# for pm: gr_pm.jar, ../real_world_domains/ or ../real_world_domains/binary/
-os.system("java -jar gr_ipc.jar <dir> %s %s %s %s %s > /dev/null" %(domain, str(phi), str(lamb), str(delta), str(threshold)))
+```sh
+# python3 experiment_simulator.py <option> <domain_name>
+python3 experiment_simulator.py IPC-d depots
 ```
 
-In `experiment_simulator.py`, specify the number of iteration and output file name
+Please find the domain names (extracted directory) in `/synthetic_domains/topk/`, `/synthetic_domains/diverse/`, `/business_logs/multiple/`, and `/business_logs/binary/`.
 
-```python
-# sa
-results = perform_experiments(model, 1000) # numebr of iteration
-save_results(results, '1000_scenarios_%s_new_model_diverse.tar.gz'%domain) # file name
+- IPC-d tests the GR performance in synthetic domains and training set generated by diverse planner.
+- IPC-t tests the GR performance in synthetic domains and training set generated by top-k planner.
+- PM-m tests the GR performance in real-world domains for multi-goal candidates inference.
+- PM-b tests the GR performance in real-world domains for binary-goal candidate inference.
 
-# sobol
-sa_results = perform_experiments(model, 1050, uncertainty_sampling='sobol')
-save_results(sa_results, '1050_scenarios_%s_sobol_new_model_diverse.tar.gz'%domain)
-```
+**Notice:** During the simulation, the `outputs/` directory will store the intermediate GR results, so be careful to avoid overwriting them.
+
+**Visualization:** the simulation outputs are stored in `tar.gz` files and we can run `senstivity_analysis.ipynb` to visualize. We renamed and moved our simulation results into `diverse/`,  `topk/`, `real_m`, and `real_b` directories.
+
+
+
+
+
+
+
+
 
 
 

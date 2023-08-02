@@ -1,4 +1,3 @@
-/outputs/
 /gene_plans/
 /datasets/
 /gene_data/
@@ -8,3 +7,5 @@
 /real_world_domains/
 /comparison/
 jdk-11.0.9_linux-x64_bin.tar.gz
+/business_logs/
+/synthetic_domains/
